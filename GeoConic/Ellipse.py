@@ -1,23 +1,8 @@
 import math
 
-#for generating most readabel eqaution
-def generate_ellipse_equation(center_x, center_y, semi_major_axis, semi_minor_axis):
-    equation = f"((x - {center_x})/{semi_major_axis})^2 + ((y - {center_y})/{semi_minor_axis})^2 = 1"
-    return equation
-
-#for generating standard equation
-def standard_ellipse_equation():
-    pass
-
-
-
-ellipse_equation = generate_ellipse_equation(0, 0, 10, 5)
-print("Ellipse Equation:", ellipse_equation)
-
-
 class Ellipse:
     #constructor
-    def __init__(self, center_x, center_y, semi_major_axis, semi_minor_axis):
+    def __init__(self,  semi_major_axis, semi_minor_axis, center_x = 0, center_y = 0):
         self.center_x = center_x
         self.center_y = center_y
         self.semi_major_axis = semi_major_axis
@@ -53,6 +38,7 @@ class Ellipse:
         return e
 
     def get_foci(self):
+        # (ae, 0) (-ae, 0)
         c = math.sqrt(self.semi_major_axis ** 2 - self.semi_minor_axis ** 2)
         foci_1 = (self.center_x - c, self.center_y)
         foci_2 = (self.center_x + c, self.center_y)
@@ -71,9 +57,30 @@ class Ellipse:
         h = ((self.semi_major_axis - self.semi_minor_axis) ** 2) / ((self.semi_major_axis + self.semi_minor_axis) ** 2)
         circumference = math.pi * (self.semi_major_axis + self.semi_minor_axis) * (1 + (3 * h / (10 + math.sqrt(4 - 3 * h))))
         return circumference
-
-
     
+    #eqaution
+    def generate_ellipse_equation(self):
+        equation = f"((x - {self.center_x})/{self.semi_major_axis})^2 + ((y - {self.center_y})/{self.semi_minor_axis})^2 = 1"
+        return equation
+    
+    def get_directrix_equation(self):
+        e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2)) 
+        equation = f"x = {self.center_x} ± ({self.semi_major_axis} / {(e)})"
+        return equation
+    
+
+
+    #distances between various entities, only couple of listed, many more to add..........
+    def distance_foci(self):
+        e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2))
+        return abs(2*self.semi_major_axis*e)
+    
+    def distance_directrixes(self):
+        e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2))
+        return abs(2*self.semi_major_axis/e)
+    
+
+
 
 
 
