@@ -2,27 +2,11 @@ import math
 
 class Ellipse:
     #constructor
-    def __init__(self,  semi_major_axis, semi_minor_axis, center_x = 0, center_y = 0):
+    def __init__(self,center_x , center_y ,semi_major_axis, semi_minor_axis):
         self.center_x = center_x
         self.center_y = center_y
         self.semi_major_axis = semi_major_axis
         self.semi_minor_axis = semi_minor_axis
-
-# get_center(self): Return a tuple containing the center coordinates.
-
-# get_semi_major_axis(self): Return the length of the semi-major axis.
-
-# get_semi_minor_axis(self): Return the length of the semi-minor axis.
-
-# get_eccentricity(self): Return the eccentricity of the ellipse.
-
-# get_foci(self): Return a tuple containing the coordinates of the foci.
-
-# get_vertices(self): Return a tuple containing the coordinates of the vertices.
-
-# get_area(self): Return the area of the ellipse.
-
-# get_circumference(self): Return the circumference of the ellipse (approximation).
 
     def get_center(self):
         return (self.center_x, self.center_y)
@@ -34,11 +18,11 @@ class Ellipse:
         return self.semi_minor_axis
 
     def get_eccentricity(self):
-        e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2))
+        t = 1 - ((self.semi_minor_axis*self.semi_minor_axis)/ (self.semi_major_axis*self.semi_major_axis))
+        e = math.sqrt(t)
         return e
 
     def get_foci(self):
-        # (ae, 0) (-ae, 0)
         c = math.sqrt(self.semi_major_axis ** 2 - self.semi_minor_axis ** 2)
         foci_1 = (self.center_x - c, self.center_y)
         foci_2 = (self.center_x + c, self.center_y)
@@ -64,12 +48,14 @@ class Ellipse:
         return equation
     
     def get_directrix_equation(self):
-        e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2)) 
+        e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2)), 2
         equation = f"x = {self.center_x} ± ({self.semi_major_axis} / {(e)})"
         return equation
     
-
-
+    def auxiliary_circle_equation(self):
+       equation = f"(x - {self.center_x})^2 + (y - {self.center_y})^2 = {self.semi_major_axis**2}"
+       return equation
+    
     #distances between various entities, only couple of listed, many more to add..........
     def distance_foci(self):
         e = math.sqrt(1 - (self.semi_minor_axis ** 2 / self.semi_major_axis ** 2))
@@ -80,6 +66,15 @@ class Ellipse:
         return abs(2*self.semi_major_axis/e)
     
 
+    #points location in the plain 
+    def isOnEllipse(self, x, y):
+        return ((x - self.center_x) ** 2 / self.semi_major_axis ** 2) + ((y - self.center_y) ** 2 / self.semi_minor_axis ** 2) == 1
+
+    def isOutsideEllipse(self, x, y):
+        return ((x - self.center_x) ** 2 / self.semi_major_axis ** 2) + ((y - self.center_y) ** 2 / self.semi_minor_axis ** 2) > 1
+
+    def isInsideEllipse(self, x, y):
+        return ((x - self.center_x) ** 2 / self.semi_major_axis ** 2) + ((y - self.center_y) ** 2 / self.semi_minor_axis ** 2) < 1
 
 
 
